@@ -84,19 +84,19 @@ options (int argc, char *argv[])
         case 'h':
           usage (argv);
           exit (EXIT_SUCCESS);
-          
+
         case 'l':
           iglower = 1;
           break;
-          
+
         case 'p':
           igpunct = 1;
           break;
-          
+
         case 's':
           igspace = 1;
           break;
-          
+
         case 'v':
           printf ("version: %ld\n", PAL_VERSION);
           exit (EXIT_SUCCESS);
@@ -146,18 +146,18 @@ ispalin (const char *str)
           --j;
           continue;
         }
-      
+
       if (iglower)
         {
           l = tolower (l);
           r = tolower (r);
         }
-      
+
       if (l != r)
         {
           return EXIT_FAILURE;
         }
-      
+
       ++i;
       --j;
     }
@@ -174,7 +174,20 @@ main (int argc, char *argv[])
     {
       char *str = argv[optind++];
 
-      printf ("%s %s\n", str, ispalin (str) ? "FAILURE" : "SUCCESS");
+      if (str == NULL || *str == '\0')
+        {
+          fprintf (stderr, "%s\n", "EMPTY");
+          continue;
+        }
+
+      if (ispalin (str) == EXIT_SUCCESS)
+        {
+          fprintf (stderr, "%s\n", "SUCCESS");
+        }
+      else /* EXIT_FAILURE */
+        {
+          fprintf (stderr, "%s\n", "FAILURE");
+        }
     }
 
   return EXIT_SUCCESS;
